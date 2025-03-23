@@ -102,7 +102,26 @@ document.getElementById('sake-image').addEventListener('change', function(e) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            imagePreview.style.backgroundImage = `url('${e.target.result}')`;
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = function() {
+                // 创建 canvas 来处理图片去背
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                
+                // 绘制图片
+                ctx.drawImage(img, 0, 0);
+                
+                // 设置背景为透明
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0,0,0,1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 更新预览
+                imagePreview.style.backgroundImage = `url('${canvas.toDataURL()}')`;
+            };
         }
         reader.readAsDataURL(file);
     }
