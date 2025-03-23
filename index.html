@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清酒收藏管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>我的清酒收藏</h1>
+        <button id="add-sake-btn">添加新清酒</button>
+        <div id="sake-container"></div>
+    </div>
+
+    <!-- 编辑模态窗口 -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>编辑清酒信息</h2>
+            <form id="sake-form">
+                <div class="form-group">
+                    <label for="sake-name">名称</label>
+                    <input type="text" id="sake-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="sake-category">类别</label>
+                    <select id="sake-category" required>
+                        <option value="大吟酿">大吟酿</option>
+                        <option value="纯米酒">纯米酒</option>
+                        <option value="本酿造">本酿造</option>
+                        <option value="生酒">生酒</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sake-rating">评分</label>
+                    <div class="rating-stars" id="sake-rating">
+                        <span data-value="1">☆</span>
+                        <span data-value="2">☆</span>
+                        <span data-value="3">☆</span>
+                        <span data-value="4">☆</span>
+                        <span data-value="5">☆</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sake-image">图片</label>
+                    <input type="file" id="sake-image" accept="image/*">
+                    <div id="image-preview"></div>
+                </div>
+                <div class="form-group">
+                    <label for="sake-notes">品酒笔记</label>
+                    <textarea id="sake-notes" rows="4"></textarea>
+                </div>
+                <button type="submit">保存</button>
+                <button type="button" id="delete-btn">删除</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
