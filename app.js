@@ -8,7 +8,7 @@ const sakeContainer = document.getElementById('sake-container');
 function renderSakes() {
     sakeContainer.innerHTML = sakes.map(sake => `
         <div class="sake-card" data-id="${sake.id}">
-            <div class="sake-image" style="background-image: url('${sake.image}')"></div>
+            <div class="sake-image" style="background-image: url('${sake.image}'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
             <div class="sake-info">
                 <h3>${sake.name}</h3>
                 <div class="sake-rating">
@@ -119,8 +119,10 @@ document.getElementById('sake-image').addEventListener('change', function(e) {
                 ctx.fillStyle = 'rgba(0,0,0,1)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // 更新预览
-                imagePreview.style.backgroundImage = `url('${canvas.toDataURL()}')`;
+                // 更新预览并保存图片数据
+                const imageUrl = canvas.toDataURL();
+                imagePreview.style.backgroundImage = `url('${imageUrl}')`;
+                sake.image = imageUrl;  // 直接使用 base64 数据
             };
         }
         reader.readAsDataURL(file);
@@ -145,7 +147,7 @@ sakeForm.addEventListener('submit', function(e) {
         category: document.getElementById('sake-category').value,
         rating: currentRating,
         notes: document.getElementById('sake-notes').value,
-        image: imagePreview.style.backgroundImage.slice(4, -1).replace(/"/g, "")
+        image: sake.image || imagePreview.style.backgroundImage.slice(4, -1).replace(/"/g, "") || 'https://via.placeholder.com/150x300'
     };
 
     if (currentSakeId) {
